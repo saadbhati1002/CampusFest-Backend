@@ -27,4 +27,4 @@ else
 }
 }
 
-echo json_encode(["saad":"saad"]);
+echo json_encode($returnArr);
