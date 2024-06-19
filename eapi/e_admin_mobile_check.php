@@ -17,11 +17,11 @@ $chek = $event->query("select * from admin where mobile='".$mobile."'")->num_row
 
 if($chek != 0)
 {
-	$returnArr = array("ResponseCode"=>"401","Result"=>"false","ResponseMsg"=>"Already Exist Mobile Number!");
+	$returnArr = array("ResponseCode"=>"200","Result"=>"false","ResponseMsg"=>"Account exist with the mobile number");
 }
 else 
 {
-	$returnArr = array("ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"New Number!");
+	$returnArr = array("ResponseCode"=>"401","Result"=>"true","ResponseMsg"=>"Mobile number not exsist");
 }
 }
 echo json_encode($returnArr);
