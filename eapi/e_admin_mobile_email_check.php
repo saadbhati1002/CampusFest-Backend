@@ -2,22 +2,24 @@
 require dirname( dirname(__FILE__) ).'/include/eventconfig.php';
 header('Content-type: text/json');
 $data = json_decode(file_get_contents('php://input'), true);
-if($data['mobile'] == '')
+if($data['mobile'] == ''or $data['email'] == '')
 {
     $returnArr = array("ResponseCode"=>"401","Result"=>"false","ResponseMsg"=>"Something Went Wrong!");
 }
 else
 {
     $mobile = strip_tags(mysqli_real_escape_string($event,$data['mobile']));
-    
+    $email = strip_tags(mysqli_real_escape_string($event,$data['email']));
     
     
 $chek = $event->query("select * from admin where mobile='".$mobile."'")->num_rows;
-
+$chek1 = $event->query("select * from admin where email='".$email."'")->num_rows;
 
 if($chek != 0)
 {
 	$returnArr = array("ResponseCode"=>"401","Result"=>"false","ResponseMsg"=>"Already Exist Mobile Number!");
+}else if($chek1 != 0){
+    	$returnArr = array("ResponseCode"=>"401","Result"=>"false","ResponseMsg"=>"Already Exist Email!");
 }
 else 
 {
