@@ -1,5 +1,7 @@
 <?php 
 require dirname( dirname(__FILE__) ).'/include/eventconfig.php';
+require dirname( dirname(__FILE__) ).'/include/eventmania.php';
+
 header('Content-type: text/json');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -32,11 +34,11 @@ else
 		   $timestamp = date("Y-m-d H:i:s");
 		   $prentcode = generate_random();
 		   $table="admin";
-  $field_values=array("name","email","mobile","rdate","password","ccode","code");
-  $data_values=array("$name","$email","$mobile","$timestamp","$password","$ccode","");
+  $field_values=array("username","email","mobile","rdate","password","ccode","status");
+  $data_values=array("$name","$email","$mobile","$timestamp","$password","$ccode","1");
         $h = new Eventmania();
 	  $check = $h->eventinsertdata_Api_Id($field_values,$data_values,$table);
-  $c = $event->query("select * from admin where mobile='".$mobile."'  and status = 1 and password='".$password."'");
+  $c = $event->query("select * from admin where mobile='".$mobile."'  and password='".$password."'");
     $c = $c->fetch_assoc();
   $returnArr = array("UserLogin"=>$c,"ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"Sign Up Done Successfully!");   
 }
