@@ -35,13 +35,12 @@ $response_data = [
     "total_tickets"=>$event->query("select * from tbl_ticket where ticket_type='Completed'")->num_rows,
     // "total_sales"=>number_format((float)$event->query("select sum(`total_amt`) as total_sales from tbl_ticket where ticket_type='Completed'")->fetch_assoc()['total_sales'], 2, '.', '') . $set['currency'],
     "total_admins"=>$event->query("select * from admin")->num_rows,
+    "total_gallery_images"=>$event->query("select * from tbl_gallery")->num_rows,
     ]
    
 ];
-// $dashboard_data['total_gallery_images'] = $event->query("select * from tbl_gallery")->num_rows;
-// $dashboard_data['total_tickets'] = $event->query("select * from tbl_ticket where ticket_type='Completed'")->num_rows;
 // $dashboard_data['total_sales'] = number_format((float)$event->query("select sum(`total_amt`) as total_sales from tbl_ticket where ticket_type='Completed'")->fetch_assoc()['total_sales'], 2, '.', '') . $set['currency'];
-// $dashboard_data['total_admins'] = $event->query("select * from admin where admin_type='SUB_ADMIN'")->num_rows;
+
 
 // $response_data['dashboard_counts'] = $dashboard_data;
 echo json_encode($response_data);

@@ -74,38 +74,3 @@ try {
 
 
 
-// $per_page = 10;
-// $page = isset($_GET['page']) ? $_GET['page'] : 0;
-// $search = isset($_GET['search']) ? $_GET['search'] : '';
-// $response_data = [];
-// $sql = "SELECT * FROM tbl_cat";
-
-// if ($search != '') {
-//     $sql .= " WHERE title LIKE '%$search%'";
-// }
-
-// if ($page > 0) {
-//     $total_record = $event->query($sql)->num_rows;
-//     $response_data['pagination'] = [
-//         'total' => $total_record,
-//         'current_page' => $page
-//     ];
-//     $offset = ($page - 1) * $per_page;
-//     $sql .= " LIMIT $per_page OFFSET $offset";
-// }
-
-// $categories = [];
-// $result = $event->query($sql);
-// while ($row = $result->fetch_assoc()) {
-//     $category = [
-//         'id' => $row['id'],
-//         'title' => $row['title'],
-//         'img' => $row['img'],
-//         'cover_img' => $row['cover_img'],
-//         'status' => $row['status'] == 1 ? "Publish" : "Unpublish"
-//     ];
-//     array_push($categories, $category);
-// }
-
-// $response_data['categories'] = $categories;
-// echo json_encode($response_data);
