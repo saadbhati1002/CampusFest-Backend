@@ -40,7 +40,7 @@ else
 	  $check = $h->eventinsertdata_Api_Id($field_values,$data_values,$table);
   $c = $event->query("select * from admin where mobile='".$mobile."'  and password='".$password."'");
     $c = $c->fetch_assoc();
-  $returnArr = array("UserLogin"=>$c,"ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"Sign Up Done Successfully!");   
+  $returnArr = array("AdminLogin"=>$c,"ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"Sign Up Done Successfully!");   
 }
 }
 
