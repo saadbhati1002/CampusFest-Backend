@@ -12,10 +12,10 @@ if ($uid == '') {
     return;
 }
 
-if ($uid == '' or checkAdmin($uid) <= 0) {
-    echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
-    return;
-}
+// if ($uid == '' or checkAdmin($uid) <= 0) {
+//     echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
+//     return;
+// }
 $per_page = 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
