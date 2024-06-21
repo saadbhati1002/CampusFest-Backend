@@ -15,8 +15,12 @@ else
 {
 	  $uid = $data['uid'];  
    $table = "tbl_user";
-
-            $field = "status=0";
+if($data['status']==0){
+    $field = "status=0";
+}else{
+    $field = "status=1";
+}
+            
 
             $where = "where id=" . $uid . "";
 
@@ -24,7 +28,7 @@ else
            
             $check = $h->eventupdateData_single($field, $table, $where);
 			
- $returnArr = array("ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"Account Delete Successfully!!");
+ $returnArr = array("ResponseCode"=>"200","Result"=>"true","ResponseMsg"=>"Account status changed Successfully!!");
 }
 echo  json_encode($returnArr);
 ?>
