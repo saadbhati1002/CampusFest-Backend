@@ -34,8 +34,8 @@ else
 		   $timestamp = date("Y-m-d H:i:s");
 		   $prentcode = generate_random();
 		   $table="admin";
-  $field_values=array("username","email","mobile","rdate","password","ccode","status");
-  $data_values=array("$name","$email","$mobile","$timestamp","$password","$ccode","1");
+  $field_values=array("username","email","mobile","rdate","password","ccode","status","admin_type");
+  $data_values=array("$name","$email","$mobile","$timestamp","$password","$ccode","1","1");
         $h = new Eventmania();
 	  $check = $h->eventinsertdata_Api_Id($field_values,$data_values,$table);
   $c = $event->query("select * from admin where mobile='".$mobile."'  and password='".$password."'");
