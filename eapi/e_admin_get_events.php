@@ -12,10 +12,10 @@ if ($uid == '') {
     return;
 }
 
-if ($uid == '' or checkAdmin($uid) <= 0) {
-    echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
-    return;
-}
+// if ($uid == '' or checkAdmin($uid) <= 0) {
+//     echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
+//     return;
+// }
 $per_page = 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -45,6 +45,7 @@ while ($row = $result->fetch_assoc()) {
         'sdate' => date("Y-m-d", strtotime($row['sdate'])),
         'img' => $row['img'],
         'cover_img' =>  $row['cover_img'],
+        'address' =>  $row['address'],
         'status' => $row['status'] == 1 ? "Publish" : "Unpublish",
         'event_status' => $row['event_status'],
         'event_time' => date("g:i A", strtotime($row['stime'])) . ' to ' . date("g:i A", strtotime($row['etime'])),
