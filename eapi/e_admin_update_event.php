@@ -22,24 +22,24 @@ if ($event_id == '') {
 $data = json_decode(file_get_contents('php://input'), true);
 
 
-if ($uid == '' or checkAdmin($uid) <= 0) {
-    echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
-    return;
-}
+// if ($uid == '' or checkAdmin($uid) <= 0) {
+//     echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
+//     return;
+// }
 
 $required_fields = ['cid', 'title', 'sdate', 'stime', 'etime', 'latitude', 'longtitude', 'place_name', 'status', 'address', 'description', 'disclaimer'];
 
-$validation_errors = [];
-foreach ($required_fields as $field) {
-    if (!array_key_exists($field, $data)) {
-        array_push($validation_errors, "The $field is required.");
-    }
-}
+// $validation_errors = [];
+// foreach ($required_fields as $field) {
+//     if (!array_key_exists($field, $data)) {
+//         array_push($validation_errors, "The $field is required.");
+//     }
+// }
 
-if (count($validation_errors)) {
-    echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
-    return;
-}
+// if (count($validation_errors)) {
+//     echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
+//     return;
+// }
 $table_name = "tbl_event";
 $fields = ['cid', 'title', 'sdate', 'stime', 'etime', 'latitude', 'longtitude', 'place_name', 'status', 'address', 'description', 'disclaimer'];
 
@@ -58,7 +58,7 @@ $event_data = [
     'description' => $data['description'],
     'disclaimer' => $data['disclaimer']
 ];
-
+if($data['img']!=""){
 if (isset($data['img'])) {
     $img = str_replace(['data:image/png;base64,', 'data:image/jpg;base64,', 'data:image/jpeg;base64,'], '', $data['img']);
     $img = str_replace(' ', '+', $data['img']);
@@ -69,7 +69,8 @@ if (isset($data['img'])) {
     $event_data['img'] = $path;
     array_push($fields, 'img');
 }
-
+}
+if($data['cover_img']!=""){
 if (isset($data['cover_img'])) {
     $cover_img = str_replace(['data:image/png;base64,', 'data:image/jpg;base64,', 'data:image/jpeg;base64,'], '', $data['cover_img']);
     $cover_img = str_replace(' ', '+', $data['cover_img']);
@@ -79,6 +80,7 @@ if (isset($data['cover_img'])) {
     file_put_contents($fname, $cover_img_content);
     $event_data['cover_img'] = $path;
     array_push($fields, 'img');
+}
 }
 
 try {

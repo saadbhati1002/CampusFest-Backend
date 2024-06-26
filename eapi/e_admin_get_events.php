@@ -48,6 +48,14 @@ while ($row = $result->fetch_assoc()) {
         'address' =>  $row['address'],
         'status' => $row['status'] == 1 ? "Publish" : "Unpublish",
         'event_status' => $row['event_status'],
+        'cid' => $row['cid'],
+        'description' => $row['description'],
+        'disclaimer' => $row['disclaimer'],
+        'latitude' =>  $row['latitude'],
+        'longitude' =>  $row['longtitude'],
+        'place_name' =>  $row['place_name'],
+        'start_time'=> date("g:iA", strtotime($row['stime'])),
+        'end_time'=> date("g:iA", strtotime($row['etime'])),
         'event_time' => date("g:i A", strtotime($row['stime'])) . ' to ' . date("g:i A", strtotime($row['etime'])),
         'total_tickets' => $event->query("select sum(tlimit) as total_ticket from tbl_type_price where eid=" . $row['id'] . "")->fetch_assoc()['total_ticket'] ?? "0"
     ];
