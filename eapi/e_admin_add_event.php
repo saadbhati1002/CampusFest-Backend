@@ -16,24 +16,24 @@ if ($uid == '') {
 $data = json_decode(file_get_contents('php://input'), true) ?? [];
 
 
-if ($uid == '' or checkAdmin($uid) <= 0) {
-    echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
-    return;
-}
+// if ($uid == '' or checkAdmin($uid) <= 0) {
+//     echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
+//     return;
+// }
 
 $required_fields = ['cid', 'title', 'img', 'cover_img', 'sdate', 'stime', 'etime', 'latitude', 'longtitude', 'place_name', 'status', 'address', 'description', 'disclaimer'];
 
-$validation_errors = [];
-foreach ($required_fields as $field) {
-    if (!array_key_exists($field, $data)) {
-        array_push($validation_errors, "The $field is required.");
-    }
-}
+// $validation_errors = [];
+// foreach ($required_fields as $field) {
+//     if (!array_key_exists($field, $data)) {
+//         array_push($validation_errors, "The $field is required.");
+//     }
+// }
 
-if (count($validation_errors)) {
-    echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
-    return;
-}
+// if (count($validation_errors)) {
+//     echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
+//     return;
+// }
 $table_name = "tbl_event";
 $fields = [
     'cid', 'title', 'sdate', 'stime', 'etime', 'latitude', 'longtitude', 'place_name', 'status', 'address', 'description', 'disclaimer', 'img', 'cover_img'
