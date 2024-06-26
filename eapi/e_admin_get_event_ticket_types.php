@@ -12,10 +12,10 @@ if ($uid == '') {
     return;
 }
 
-if ($uid == '' or checkAdmin($uid) <= 0) {
-    echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
-    return;
-}
+// if ($uid == '' or checkAdmin($uid) <= 0) {
+//     echo json_encode(array("ResponseCode" => "401", "Result" => "false", "ResponseMsg" => "Unauthorized"));
+//     return;
+// }
 $event_id = isset($_GET['event_id']) ? $_GET['event_id'] : '';
 if ($event_id == '') {
     echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Event not found."));
