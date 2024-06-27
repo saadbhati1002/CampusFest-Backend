@@ -57,7 +57,7 @@ try {
     $eventmedia = new Eventmania();
     $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $category_id");
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Faq category has been added successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Faq category has been updated successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));
