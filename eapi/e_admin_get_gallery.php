@@ -44,6 +44,7 @@ $sql1 = "SELECT * FROM tbl_event WHERE id = '$event_id'";
 $result1 = $event->query($sql1);
 while ($row1 = $result1->fetch_assoc()) {
     $category = [
+        'id' => $row['id'],
         'event_name' => $row1['title'],
         'img' => $row['img'],
         'status' => $row['status'] == 1 ? "Publish" : "Unpublish"

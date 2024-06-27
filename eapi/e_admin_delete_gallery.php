@@ -29,7 +29,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 
 
-$table_name = "tbl_faq";
+$table_name = "tbl_gallery";
 
 try {
 
