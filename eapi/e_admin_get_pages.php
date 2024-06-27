@@ -20,7 +20,7 @@ $per_page = 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $response_data = [];
-$sql = "SELECT * FROM tbl_faq";
+$sql = "SELECT * FROM tbl_page";
 
 if ($search != '') {
     $sql .= " WHERE title LIKE '%$search%'";
@@ -41,9 +41,8 @@ $result = $event->query($sql);
 while ($row = $result->fetch_assoc()) {
     $category = [
         'id' => $row['id'],
-        'question' => $row['question'],
-        'answer' => $row['answer'],
-        'cat_id' => $row['fid'],
+        'title' => $row['title'],
+        'description' => $row['description'],
         'status' => $row['status'] == 1 ? "Publish" : "Unpublish"
     ];
     array_push($categories, $category);
@@ -52,5 +51,5 @@ while ($row = $result->fetch_assoc()) {
 $response_data['ResponseCode'] = "200";
 $response_data['Result'] = "true";
 $response_data['ResponseMsg'] = "true";
-$response_data['faq'] = $categories;
+$response_data['pages'] = $categories;
 echo json_encode($response_data);
