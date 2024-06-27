@@ -2,7 +2,7 @@
 require dirname(dirname(__FILE__)) . '/include/eventmania.php';
 
 header('Content-type: text/json');
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if ($_SERVER['REQUEST_METHOD'] != 'PUT') {
     echo json_encode(array("ResponseCode" => "405", "Result" => "false", "ResponseMsg" => "Method not allowed"));
     return;
 }
@@ -13,7 +13,12 @@ if ($uid == '') {
     return;
 }
 
-$uid = isset($_GET['uid']) ? $_GET['uid'] : '';
+$page_id = isset($_GET['page_id']) ? $_GET['page_id'] : '';
+if ($page_id == '') {
+    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "faq not found"));
+    return;
+}
+
 $data = json_decode(file_get_contents('php://input'), true);
 
 
@@ -22,7 +27,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 //     return;
 // }
 
-$required_fields = ['title', 'status', 'img', 'cover_img'];
+$required_fields = ['title', 'status'];
 
 // $validation_errors = [];
 // foreach ($required_fields as $field) {
@@ -37,7 +42,7 @@ $required_fields = ['title', 'status', 'img', 'cover_img'];
 // }
 $table_name = "tbl_page";
 $fields = [
-    'title','description', 'status'
+     'title','description', 'status'
 ];
 
 $category_data = [
@@ -46,19 +51,13 @@ $category_data = [
     'status' => $event->real_escape_string($data['status']),
 ];
 
-
-
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventinsertdata_Api($fields, $category_data, $table_name);
+    $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $page_id");
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Page has been added successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Page has been updated successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));
-    return;
 }
-
-
-
