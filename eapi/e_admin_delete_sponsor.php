@@ -13,9 +13,9 @@ if ($uid == '') {
     return;
 }
 
-$gallery_id = isset($_GET['gallery_id']) ? $_GET['gallery_id'] : '';
-if ($gallery_id == '') {
-    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Gallery ID not found"));
+$sponsor_id = isset($_GET['sponsor_id']) ? $_GET['sponsor_id'] : '';
+if ($sponsor_id == '') {
+    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Sponsor id not found"));
     return;
 }
 
@@ -29,14 +29,14 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 
 
-$table_name = "tbl_gallery";
+$table_name = "tbl_sponsore";
 
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventDeleteData("where id = $gallery_id", $table_name);
+    $result = $eventmedia->eventDeleteData("where id = $sponsor_id", $table_name);
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Gallery deleted successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Sponsor deleted successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));
