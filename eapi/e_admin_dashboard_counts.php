@@ -32,6 +32,7 @@ $response_data = [
     "total_faqs"=>$event->query("select * from tbl_faq")->num_rows,
     "total_users"=>$event->query("select * from tbl_user")->num_rows,
     "total_offers"=>$event->query("select * from tbl_coupon")->num_rows,
+    "total_sponsor"=>$event->query("select * from tbl_sponsore")->num_rows,
     "total_tickets"=>$event->query("select * from tbl_ticket where ticket_type='Completed'")->num_rows,
     // "total_sales"=>number_format((float)$event->query("select sum(`total_amt`) as total_sales from tbl_ticket where ticket_type='Completed'")->fetch_assoc()['total_sales'], 2, '.', '') . $set['currency'],
     "total_admins"=>$event->query("select * from admin")->num_rows,
