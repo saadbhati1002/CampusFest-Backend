@@ -2,7 +2,7 @@
 require dirname(dirname(__FILE__)) . '/include/eventmania.php';
 
 header('Content-type: text/json');
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if ($_SERVER['REQUEST_METHOD'] != 'PUT') {
     echo json_encode(array("ResponseCode" => "405", "Result" => "false", "ResponseMsg" => "Method not allowed"));
     return;
 }
@@ -13,7 +13,12 @@ if ($uid == '') {
     return;
 }
 
-$uid = isset($_GET['uid']) ? $_GET['uid'] : '';
+$price_type_id = isset($_GET['price_type_id']) ? $_GET['price_type_id'] : '';
+if ($price_type_id == '') {
+    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "id not found"));
+    return;
+}
+
 $data = json_decode(file_get_contents('php://input'), true);
 
 
@@ -22,7 +27,8 @@ $data = json_decode(file_get_contents('php://input'), true);
 //     return;
 // }
 
-$required_fields = [    'title','description', 'status'];
+$required_fields = [    'eid','type', 'price',"tlimit","status"
+];
 
 // $validation_errors = [];
 // foreach ($required_fields as $field) {
@@ -35,30 +41,27 @@ $required_fields = [    'title','description', 'status'];
 //     echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
 //     return;
 // }
-$table_name = "tbl_page";
+$table_name = "tbl_type_price";
 $fields = [
-    'title','description', 'status'
+     'eid','type', 'price',"tlimit","status"
+
 ];
 
 $category_data = [
-    'title' => $event->real_escape_string($data['title']),
-    'description' => $event->real_escape_string($data['description']),
+    'eid' => $event->real_escape_string($data['eid']),
+    'type' => $event->real_escape_string($data['type']),
+    'price' => $event->real_escape_string($data['price']),
+    'tlimit' => $event->real_escape_string($data['tlimit']),
     'status' => $event->real_escape_string($data['status']),
 ];
-
-
 
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventinsertdata_Api($fields, $category_data, $table_name);
+    $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $price_type_id");
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Page has been added successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Price & Type has been updated successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));
-    return;
 }
-
-
-

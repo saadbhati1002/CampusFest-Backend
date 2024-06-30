@@ -13,8 +13,8 @@ if ($uid == '') {
     return;
 }
 
-$page_id = isset($_GET['page_id']) ? $_GET['page_id'] : '';
-if ($page_id == '') {
+$price_type_id = isset($_GET['price_type_id']) ? $_GET['price_type_id'] : '';
+if ($price_type_id == '') {
     echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Id not found"));
     return;
 }
@@ -29,14 +29,14 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 
 
-$table_name = "tbl_page";
+$table_name = "tbl_type_price";
 
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventDeleteData("where id = $page_id", $table_name);
+    $result = $eventmedia->eventDeleteData("where id = $price_type_id", $table_name);
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Page deleted successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Price & Type deleted successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));

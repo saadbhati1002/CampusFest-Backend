@@ -15,7 +15,7 @@ if ($uid == '') {
 
 $page_id = isset($_GET['page_id']) ? $_GET['page_id'] : '';
 if ($page_id == '') {
-    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "faq not found"));
+    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "id not found"));
     return;
 }
 
