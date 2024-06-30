@@ -13,9 +13,9 @@ if ($uid == '') {
     return;
 }
 
-$gallery_id = isset($_GET['gallery_id']) ? $_GET['gallery_id'] : '';
-if ($gallery_id == '') {
-    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Id not found"));
+$cover_id = isset($_GET['cover_id']) ? $_GET['cover_id'] : '';
+if ($cover_id == '') {
+    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "id not found"));
     return;
 }
 
@@ -40,7 +40,7 @@ $required_fields = ['title', 'status'];
 //     echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
 //     return;
 // }
-$table_name = "tbl_gallery";
+$table_name = "tbl_cover";
 $fields = [
        'eid', 'status', 'img',
 ];
@@ -68,9 +68,9 @@ if (isset($data['img'])) {
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $gallery_id");
+    $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $cover_id");
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Gallery Image has been updated successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Cover image has been updated successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));

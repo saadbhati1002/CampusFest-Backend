@@ -2,7 +2,7 @@
 require dirname(dirname(__FILE__)) . '/include/eventmania.php';
 
 header('Content-type: text/json');
-if ($_SERVER['REQUEST_METHOD'] != 'PUT') {
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     echo json_encode(array("ResponseCode" => "405", "Result" => "false", "ResponseMsg" => "Method not allowed"));
     return;
 }
@@ -13,12 +13,7 @@ if ($uid == '') {
     return;
 }
 
-$gallery_id = isset($_GET['gallery_id']) ? $_GET['gallery_id'] : '';
-if ($gallery_id == '') {
-    echo json_encode(array("ResponseCode" => "404", "Result" => "false", "ResponseMsg" => "Id not found"));
-    return;
-}
-
+$uid = isset($_GET['uid']) ? $_GET['uid'] : '';
 $data = json_decode(file_get_contents('php://input'), true);
 
 
@@ -27,7 +22,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 //     return;
 // }
 
-$required_fields = ['title', 'status'];
+$required_fields = ['title', 'status', 'img', 'cover_img'];
 
 // $validation_errors = [];
 // foreach ($required_fields as $field) {
@@ -40,38 +35,39 @@ $required_fields = ['title', 'status'];
 //     echo json_encode(array("ResponseCode" => "422", "Result" => "false", "ResponseMsg" => "Invalid request", 'validation_errors' => $validation_errors));
 //     return;
 // }
-$table_name = "tbl_gallery";
+$table_name = "tbl_cover";
 $fields = [
-       'eid', 'status', 'img',
+    'eid', 'status', 'img',
 ];
-
 
 $category_data = [
     'eid' => $event->real_escape_string($data['eid']),
     'status' => $event->real_escape_string($data['status']),
 ];
 
-if($data['img']!=""){
-if (isset($data['img'])) {
-    $img = str_replace(['data:image/png;base64,', 'data:image/jpg;base64,', 'data:image/jpeg;base64,'], '', $data['img']);
-    $img = str_replace(' ', '+', $data['img']);
-    $img_content = base64_decode($img);
-    $path = 'images/category/' . uniqid() . '.png';
-    $fname = dirname(dirname(__FILE__)) . '/' . $path;
-    file_put_contents($fname, $img_content);
-    $category_data['img'] = $path;
-    array_push($fields, 'img');
-}
-}
+$img = str_replace(['data:image/png;base64,', 'data:image/jpg;base64,', 'data:image/jpeg;base64,'], '', $data['img']);
+$img = str_replace(' ', '+', $data['img']);
+$img_content = base64_decode($img);
+$path = 'images/category/' . uniqid() . '.png';
+$fname = dirname(dirname(__FILE__)) . '/' . $path;
+file_put_contents($fname, $img_content);
+$category_data['img'] = $path;
+
+
+
 
 
 try {
 
     $eventmedia = new Eventmania();
-    $result = $eventmedia->eventupdateData_Api($category_data, $table_name, "where id = $gallery_id");
+    $result = $eventmedia->eventinsertdata_Api($fields, $category_data, $table_name);
     if ($result) {
-        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Gallery Image has been updated successfully."));
+        echo json_encode(array("ResponseCode" => "200", "Result" => "true", "ResponseMsg" => "Cover image has been added successfully."));
     }
 } catch (Exception $e) {
     echo json_encode(array("ResponseCode" => "400", "Result" => "false", "ResponseMsg" => $e->getMessage()));
+    return;
 }
+
+
+
